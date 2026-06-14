@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Record Operations - StackLens Canary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "inverse-primary": "#bec6e0",
+                            "surface-bright": "#fcf8fa",
+                            "on-secondary-fixed-variant": "#574500",
+                            "secondary-fixed": "#ffe083",
+                            "primary": "#000000",
+                            "secondary-container": "#fed01b",
+                            "surface-variant": "#e4e2e4",
+                            "on-primary-container": "#7c839b",
+                            "outline-variant": "#c6c6cd",
+                            "tertiary": "#000000",
+                            "primary-fixed": "#dae2fd",
+                            "error": "#ba1a1a",
+                            "inverse-surface": "#303032",
+                            "outline": "#76777d",
+                            "on-tertiary": "#ffffff",
+                            "on-surface-variant": "#45464d",
+                            "secondary-fixed-dim": "#eec200",
+                            "tertiary-fixed-dim": "#dec29a",
+                            "surface-dim": "#dcd9db",
+                            "secondary": "#735c00",
+                            "surface-tint": "#565e74",
+                            "surface-container-lowest": "#ffffff",
+                            "on-secondary-container": "#6f5900",
+                            "surface-container-high": "#eae7e9",
+                            "on-secondary": "#ffffff",
+                            "on-error": "#ffffff",
+                            "on-primary": "#ffffff",
+                            "on-tertiary-fixed": "#271901",
+                            "on-tertiary-container": "#98805d",
+                            "primary-container": "#131b2e",
+                            "on-primary-fixed": "#131b2e",
+                            "surface-container": "#f0edef",
+                            "on-error-container": "#93000a",
+                            "surface-container-low": "#f6f3f5",
+                            "on-tertiary-fixed-variant": "#574425",
+                            "tertiary-fixed": "#fcdeb5",
+                            "background": "#fcf8fa",
+                            "surface": "#fcf8fa",
+                            "inverse-on-surface": "#f3f0f2",
+                            "on-primary-fixed-variant": "#3f465c",
+                            "surface-container-highest": "#e4e2e4",
+                            "primary-fixed-dim": "#bec6e0",
+                            "on-background": "#1b1b1d",
+                            "on-secondary-fixed": "#231b00",
+                            "tertiary-container": "#271901",
+                            "error-container": "#ffdad6",
+                            "on-surface": "#1b1b1d"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.125rem",
+                            "lg": "0.25rem",
+                            "xl": "0.5rem",
+                            "full": "0.75rem"
+                    },
+                    "spacing": {
+                            "row-height-standard": "44px",
+                            "unit": "4px",
+                            "row-height-compact": "32px",
+                            "gutter": "12px",
+                            "container-padding": "16px"
+                    },
+                    "fontFamily": {
+                            "headline-md": [
+                                    "Inter"
+                            ],
+                            "headline-lg": [
+                                    "Inter"
+                            ],
+                            "data-mono": [
+                                    "JetBrains Mono"
+                            ],
+                            "body-md": [
+                                    "Inter"
+                            ],
+                            "body-sm": [
+                                    "Inter"
+                            ],
+                            "label-caps": [
+                                    "Inter"
+                            ]
+                    },
+                    "fontSize": {
+                            "headline-md": [
+                                    "18px",
+                                    {
+                                            "lineHeight": "24px",
+                                            "letterSpacing": "-0.01em",
+                                            "fontWeight": "600"
+                                    }
+                            ],
+                            "headline-lg": [
+                                    "24px",
+                                    {
+                                            "lineHeight": "32px",
+                                            "letterSpacing": "-0.02em",
+                                            "fontWeight": "700"
+                                    }
+                            ],
+                            "data-mono": [
+                                    "13px",
+                                    {
+                                            "lineHeight": "18px",
+                                            "fontWeight": "500"
+                                    }
+                            ],
+                            "body-md": [
+                                    "14px",
+                                    {
+                                            "lineHeight": "20px",
+                                            "fontWeight": "400"
+                                    }
+                            ],
+                            "body-sm": [
+                                    "12px",
+                                    {
+                                            "lineHeight": "16px",
+                                            "fontWeight": "400"
+                                    }
+                            ],
+                            "label-caps": [
+                                    "11px",
+                                    {
+                                            "lineHeight": "14px",
+                                            "letterSpacing": "0.05em",
+                                            "fontWeight": "700"
+                                    }
+                            ]
+                    }
+            },
+                },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-hidden flex flex-col h-screen selection:bg-secondary-container selection:text-primary">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-gutter w-full z-50 bg-primary dark:bg-primary-container docked full-width top-0 h-row-height-standard">
+<div class="flex items-center gap-4">
+<h1 class="font-headline-md text-headline-md font-black text-on-primary">StackLens Canary</h1>
+<div class="relative hidden md:block w-64 ml-4">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-on-primary-container text-sm">search</span>
+<input class="w-full bg-primary-container text-on-primary-container border-none focus:ring-1 focus:ring-secondary rounded text-sm py-1 pl-8 pr-2 h-7 font-data-mono text-data-mono placeholder:text-on-primary-container placeholder:opacity-50" placeholder="Search Records" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-surface-container-lowest text-primary px-3 h-7 rounded font-label-caps text-label-caps hover:bg-surface-container-high transition-colors focus:ring-1 focus:ring-secondary border border-outline-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">add</span> Create Record
+            </button>
+<div class="flex items-center gap-2 text-on-primary-container opacity-80">
+<button class="hover:text-on-primary transition-colors focus:ring-1 focus:ring-secondary rounded p-1 flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:text-on-primary transition-colors focus:ring-1 focus:ring-secondary rounded p-1 flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden h-full">
+<!-- SideNavBar -->
+<nav class="bg-surface dark:bg-surface-container-lowest h-screen w-64 border-r border-outline-variant flex flex-col py-spacing-container-padding flex-shrink-0">
+<div class="px-container-padding mb-6 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary font-bold font-headline-lg text-headline-lg">
+                    S
+                </div>
+<div>
+<div class="font-headline-md text-headline-md text-primary dark:text-inverse-primary font-bold">StackLens</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">Operational Dashboard</div>
+</div>
+</div>
+<ul class="flex flex-col gap-1 px-2 flex-1">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 h-row-height-compact rounded border-l-2 border-secondary-container bg-surface-container-high text-primary font-bold scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined icon-fill" data-icon="dashboard">dashboard</span>
+<span>Operations</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 h-row-height-compact rounded border-l-2 border-transparent text-on-surface-variant font-body-md hover:bg-surface-container-low transition-colors hover:bg-surface-container dark:hover:bg-surface-container-highest" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Insights</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 h-row-height-compact rounded border-l-2 border-transparent text-on-surface-variant font-body-md hover:bg-surface-container-low transition-colors hover:bg-surface-container dark:hover:bg-surface-container-highest" href="#">
+<span class="material-symbols-outlined" data-icon="monitor_heart">monitor_heart</span>
+<span>System Health</span>
+</a>
+</li>
+</ul>
+<div class="px-container-padding mt-auto">
+<button class="w-full bg-secondary-container text-primary font-label-caps text-label-caps h-row-height-compact rounded hover:bg-secondary-fixed-dim transition-colors focus:ring-1 focus:ring-primary flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">rocket_launch</span> Deploy Stack
+                </button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-hidden bg-background">
+<!-- Metrics Summary Bar -->
+<div class="flex gap-4 p-container-padding border-b border-outline-variant bg-surface-container-lowest shrink-0">
+<div class="flex-1 bg-surface-container-low border border-outline-variant p-3 rounded flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Total Modules</span>
+<span class="font-data-mono text-data-mono text-lg font-bold">1,204</span>
+</div>
+<div class="flex-1 bg-surface-container-low border border-outline-variant p-3 rounded flex items-center justify-between border-l-2 border-l-primary-fixed-dim">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Healthy</span>
+<span class="font-data-mono text-data-mono text-lg font-bold text-on-background">1,192</span>
+</div>
+<div class="flex-1 bg-secondary-container border border-outline-variant p-3 rounded flex items-center justify-between shadow-sm">
+<span class="font-label-caps text-label-caps text-on-secondary-container flex items-center gap-1"><span class="material-symbols-outlined text-sm icon-fill">warning</span> Warning</span>
+<span class="font-data-mono text-data-mono text-lg font-bold text-on-secondary-container">11</span>
+</div>
+<div class="flex-1 bg-error-container border border-error p-3 rounded flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-error-container flex items-center gap-1"><span class="material-symbols-outlined text-sm icon-fill">error</span> Failed</span>
+<span class="font-data-mono text-data-mono text-lg font-bold text-on-error-container">1</span>
+</div>
+</div>
+<!-- Toolbar -->
+<div class="flex justify-between items-center px-container-padding py-2 border-b border-outline-variant bg-surface-bright shrink-0">
+<div class="flex gap-2">
+<button class="bg-surface border border-outline-variant text-on-surface px-3 py-1 text-xs rounded font-label-caps text-label-caps hover:bg-surface-container-low active:bg-surface-container-high transition-colors font-bold">All</button>
+<button class="bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-3 py-1 text-xs rounded font-label-caps text-label-caps hover:bg-surface-container-low transition-colors">Healthy</button>
+<button class="bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-3 py-1 text-xs rounded font-label-caps text-label-caps hover:bg-surface-container-low transition-colors">Warning</button>
+<button class="bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-3 py-1 text-xs rounded font-label-caps text-label-caps hover:bg-surface-container-low transition-colors">Failed</button>
+</div>
+<div>
+<button class="bg-surface-container-lowest border border-outline-variant text-on-surface px-3 py-1 h-7 rounded font-label-caps text-label-caps hover:bg-surface-container-low transition-colors focus:ring-1 focus:ring-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">refresh</span> Retry Load
+                    </button>
+</div>
+</div>
+<!-- Content Area (Table + Preview Split) -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Data Table -->
+<div class="flex-1 overflow-auto bg-surface-container-lowest border-r border-outline-variant">
+<table class="w-full text-left border-collapse">
+<thead class="sticky top-0 bg-surface-container-low z-10 border-b border-outline-variant shadow-sm">
+<tr>
+<th class="py-2 px-3 font-label-caps text-label-caps text-on-surface-variant border-r border-outline-variant w-10 text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-3 w-3" type="checkbox"/></th>
+<th class="py-2 px-3 font-label-caps text-label-caps text-on-surface-variant border-r border-outline-variant">Module Name</th>
+<th class="py-2 px-3 font-label-caps text-label-caps text-on-surface-variant border-r border-outline-variant">Ownership</th>
+<th class="py-2 px-3 font-label-caps text-label-caps text-on-surface-variant border-r border-outline-variant text-center">Build</th>
+<th class="py-2 px-3 font-label-caps text-label-caps text-on-surface-variant border-r border-outline-variant text-right">Test Coverage</th>
+<th class="py-2 px-3 font-label-caps text-label-caps text-on-surface-variant">Recovery Notes</th>
+</tr>
+</thead>
+<tbody class="font-data-mono text-data-mono text-xs">
+<!-- Row 1 (Warning - Selected) -->
+<tr class="h-row-height-compact border-b border-outline-variant bg-secondary-fixed/20 hover:bg-secondary-fixed/30 cursor-pointer border-l-2 border-l-secondary-container">
+<td class="py-1 px-3 border-r border-outline-variant text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-3 w-3" type="checkbox"/></td>
+<td class="py-1 px-3 border-r border-outline-variant font-bold">Auth-Service-EU</td>
+<td class="py-1 px-3 border-r border-outline-variant text-on-surface-variant">Team Identity</td>
+<td class="py-1 px-3 border-r border-outline-variant text-center">
+<span class="inline-flex items-center justify-center bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-sm text-[10px] uppercase font-bold leading-none h-4">Warning</span>
+</td>
+<td class="py-1 px-3 border-r border-outline-variant text-right">82%</td>
+<td class="py-1 px-3 text-on-surface-variant truncate max-w-xs">Latency spike detected in redis cache...</td>
+</tr>
+<!-- Row 2 (Healthy) -->
+<tr class="h-row-height-compact border-b border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low cursor-pointer">
+<td class="py-1 px-3 border-r border-outline-variant text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-3 w-3" type="checkbox"/></td>
+<td class="py-1 px-3 border-r border-outline-variant">Web-Frontend-01</td>
+<td class="py-1 px-3 border-r border-outline-variant text-on-surface-variant">Team Alpha</td>
+<td class="py-1 px-3 border-r border-outline-variant text-center">
+<span class="inline-flex items-center justify-center bg-primary-fixed-dim text-on-primary-fixed px-2 py-0.5 rounded-sm text-[10px] uppercase font-bold leading-none h-4">Passing</span>
+</td>
+<td class="py-1 px-3 border-r border-outline-variant text-right">98%</td>
+<td class="py-1 px-3 text-on-surface-variant truncate max-w-xs">-</td>
+</tr>
+<!-- Row 3 (Failed) -->
+<tr class="h-row-height-compact border-b border-outline-variant bg-error-container/20 hover:bg-error-container/40 cursor-pointer">
+<td class="py-1 px-3 border-r border-outline-variant text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-3 w-3" type="checkbox"/></td>
+<td class="py-1 px-3 border-r border-outline-variant text-error font-bold">Payment-Gateway-Core</td>
+<td class="py-1 px-3 border-r border-outline-variant text-on-surface-variant">Team Commerce</td>
+<td class="py-1 px-3 border-r border-outline-variant text-center">
+<span class="inline-flex items-center justify-center bg-error text-on-error px-2 py-0.5 rounded-sm text-[10px] uppercase font-bold leading-none h-4">Failing</span>
+</td>
+<td class="py-1 px-3 border-r border-outline-variant text-right">45%</td>
+<td class="py-1 px-3 text-on-surface-variant truncate max-w-xs text-error">Integration tests timing out on webhook...</td>
+</tr>
+<!-- Row 4 (Healthy Zebra) -->
+<tr class="h-row-height-compact border-b border-outline-variant bg-surface-container-low hover:bg-surface-container cursor-pointer">
+<td class="py-1 px-3 border-r border-outline-variant text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-3 w-3" type="checkbox"/></td>
+<td class="py-1 px-3 border-r border-outline-variant">Inventory-Sync-Worker</td>
+<td class="py-1 px-3 border-r border-outline-variant text-on-surface-variant">Team Logistics</td>
+<td class="py-1 px-3 border-r border-outline-variant text-center">
+<span class="inline-flex items-center justify-center bg-primary-fixed-dim text-on-primary-fixed px-2 py-0.5 rounded-sm text-[10px] uppercase font-bold leading-none h-4">Passing</span>
+</td>
+<td class="py-1 px-3 border-r border-outline-variant text-right">92%</td>
+<td class="py-1 px-3 text-on-surface-variant truncate max-w-xs">-</td>
+</tr>
+<!-- Row 5 (Healthy) -->
+<tr class="h-row-height-compact border-b border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low cursor-pointer">
+<td class="py-1 px-3 border-r border-outline-variant text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary h-3 w-3" type="checkbox"/></td>
+<td class="py-1 px-3 border-r border-outline-variant">User-Profile-API</td>
+<td class="py-1 px-3 border-r border-outline-variant text-on-surface-variant">Team Identity</td>
+<td class="py-1 px-3 border-r border-outline-variant text-center">
+<span class="inline-flex items-center justify-center bg-primary-fixed-dim text-on-primary-fixed px-2 py-0.5 rounded-sm text-[10px] uppercase font-bold leading-none h-4">Passing</span>
+</td>
+<td class="py-1 px-3 border-r border-outline-variant text-right">88%</td>
+<td class="py-1 px-3 text-on-surface-variant truncate max-w-xs">-</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Side Panel Preview -->
+<div class="w-80 bg-surface-container-lowest flex flex-col shrink-0 shadow-[-4px_0_15px_-3px_rgba(0,0,0,0.05)] border-l border-outline-variant z-10 relative">
+<div class="absolute top-0 right-0 w-full h-1 bg-secondary-container"></div>
+<div class="p-container-padding border-b border-outline-variant flex justify-between items-start pt-5">
+<div>
+<div class="font-data-mono text-data-mono text-xs text-on-surface-variant mb-1">MODULE DETAILS</div>
+<h2 class="font-headline-md text-headline-md font-bold">Auth-Service-EU</h2>
+<div class="flex items-center gap-2 mt-2">
+<span class="inline-flex items-center justify-center bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-sm font-label-caps text-[10px]">Warning State</span>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div class="p-container-padding overflow-y-auto flex-1 bg-surface-bright">
+<div class="space-y-4">
+<!-- Info Group -->
+<div class="grid grid-cols-2 gap-4 border-b border-outline-variant pb-4">
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1">Owner</div>
+<div class="font-body-md text-body-md">Team Identity</div>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1">Last Deploy</div>
+<div class="font-data-mono text-data-mono text-xs">2h ago (v1.4.2)</div>
+</div>
+</div>
+<!-- Log Snippet -->
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2 flex justify-between items-center">
+<span>ActivityEvent Log</span>
+<span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-primary">open_in_new</span>
+</div>
+<div class="bg-[#1e1e1e] text-[#d4d4d4] p-3 rounded font-data-mono text-[10px] leading-relaxed overflow-x-auto border border-[#333]">
+<div class="text-[#569cd6]">[INFO] 10:24:01 Starting routine health check...</div>
+<div class="text-[#ce9178]">[WARN] 10:24:05 Latency spike detected in redis cache (Region: EU-West-1).</div>
+<div class="text-[#dcdcaa]">[DEBUG] 10:24:06 Connection pool utilization at 85%.</div>
+<div class="text-[#dcdcaa]">[DEBUG] 10:24:08 Initiating circuit breaker backoff strategy.</div>
+<div class="text-[#569cd6]">[INFO] 10:24:10 Routing fallback traffic to secondary store.</div>
+</div>
+</div>
+<!-- Failure Routing -->
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">Failure Routing Details</div>
+<div class="bg-surface-container border border-outline-variant p-3 rounded">
+<ul class="space-y-2 font-data-mono text-[11px]">
+<li class="flex justify-between border-b border-outline-variant pb-1">
+<span class="text-on-surface-variant">Primary DNS:</span>
+<span class="text-error line-through">auth.eu.internal</span>
+</li>
+<li class="flex justify-between">
+<span class="text-on-surface-variant">Fallback DNS:</span>
+<span class="text-primary font-bold">auth.eu-backup.internal</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="p-container-padding border-t border-outline-variant bg-surface-container-lowest">
+<button class="w-full bg-surface-container border border-outline-variant text-on-surface font-label-caps text-label-caps py-2 rounded hover:bg-surface-container-high transition-colors focus:ring-1 focus:ring-primary flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">terminal</span> Open Console
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="flex justify-between items-center px-spacing-container-padding w-full bg-surface-container-lowest dark:bg-surface-dim docked full-width bottom-0 h-row-height-compact border-t border-outline-variant shrink-0 z-50">
+<div class="font-label-caps text-label-caps text-on-surface-variant">
+            © 2024 StackLens Operational Intelligence
+        </div>
+<div class="flex gap-4">
+<a class="font-data-mono text-data-mono text-on-surface-variant hover:text-primary underline transition-all cursor-pointer flex items-center gap-1" href="#">
+<span class="w-2 h-2 rounded-full bg-green-500 inline-block"></span> Connection: Stable
+            </a>
+<a class="font-data-mono text-data-mono text-on-surface-variant hover:text-primary underline transition-all cursor-pointer" href="#">
+                Env: Canary
+            </a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline transition-all cursor-pointer" href="#">
+                Support
+            </a>
+</div>
+</footer>
+</body></html>

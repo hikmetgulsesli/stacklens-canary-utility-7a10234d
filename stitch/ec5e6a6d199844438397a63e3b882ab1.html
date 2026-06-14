@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StackLens - Insights</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#bec6e0",
+                        "surface-bright": "#fcf8fa",
+                        "on-secondary-fixed-variant": "#574500",
+                        "secondary-fixed": "#ffe083",
+                        "primary": "#000000",
+                        "secondary-container": "#fed01b",
+                        "surface-variant": "#e4e2e4",
+                        "on-primary-container": "#7c839b",
+                        "outline-variant": "#c6c6cd",
+                        "tertiary": "#000000",
+                        "primary-fixed": "#dae2fd",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#303032",
+                        "outline": "#76777d",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#45464d",
+                        "secondary-fixed-dim": "#eec200",
+                        "tertiary-fixed-dim": "#dec29a",
+                        "surface-dim": "#dcd9db",
+                        "secondary": "#735c00",
+                        "surface-tint": "#565e74",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#6f5900",
+                        "surface-container-high": "#eae7e9",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#271901",
+                        "on-tertiary-container": "#98805d",
+                        "primary-container": "#131b2e",
+                        "on-primary-fixed": "#131b2e",
+                        "surface-container": "#f0edef",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#f6f3f5",
+                        "on-tertiary-fixed-variant": "#574425",
+                        "tertiary-fixed": "#fcdeb5",
+                        "background": "#fcf8fa",
+                        "surface": "#fcf8fa",
+                        "inverse-on-surface": "#f3f0f2",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "surface-container-highest": "#e4e2e4",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-background": "#1b1b1d",
+                        "on-secondary-fixed": "#231b00",
+                        "tertiary-container": "#271901",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1b1b1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "row-height-standard": "44px",
+                        "unit": "4px",
+                        "row-height-compact": "32px",
+                        "gutter": "12px",
+                        "container-padding": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "data-mono": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md text-body-md min-h-screen flex flex-col antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopAppBar -->
+<header class="bg-primary dark:bg-primary-container text-on-primary dark:text-on-primary-container docked full-width top-0 h-row-height-standard flat no shadows flex justify-between items-center px-gutter w-full z-50">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-black text-on-primary">StackLens Canary</span>
+<!-- Search Bar (on_left implies it's near the brand) -->
+<div class="hidden md:flex items-center bg-inverse-surface/20 rounded px-2 py-1 ml-4 border border-on-primary/10">
+<span class="material-symbols-outlined text-[16px] mr-2">search</span>
+<input class="bg-transparent border-none text-on-primary font-data-mono text-data-mono focus:ring-0 w-48 p-0 text-sm placeholder:text-on-primary/50" placeholder="Search systems..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary-container text-on-primary-container hover:bg-primary-fixed-variant hover:text-on-primary-fixed px-3 py-1 rounded font-label-caps text-label-caps transition-colors">
+                Create Record
+            </button>
+<button aria-label="notifications" class="text-on-primary-container opacity-80 hover:bg-primary-fixed-variant hover:text-on-primary-fixed p-1 rounded transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button aria-label="settings" class="text-on-primary-container opacity-80 hover:bg-primary-fixed-variant hover:text-on-primary-fixed p-1 rounded transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<nav class="bg-surface dark:bg-surface-container-lowest h-screen w-64 border-r border-outline-variant flat no shadows flex flex-col h-full py-spacing-container-padding hidden md:flex shrink-0">
+<div class="px-container-padding mb-6">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-8 h-8 rounded bg-primary text-on-primary flex items-center justify-center font-bold">SL</div>
+<div>
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary dark:text-inverse-primary leading-none">StackLens</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Operational Dashboard</p>
+</div>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-1 px-2">
+<!-- Inactive Tab 1 -->
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant font-body-md hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span>Operations</span>
+</a>
+<!-- Active Tab 2 -->
+<a class="flex items-center gap-3 px-3 py-2 rounded border-l-2 border-secondary-container bg-surface-container-high text-primary font-bold active:scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span>Insights</span>
+</a>
+<!-- Inactive Tab 3 -->
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant font-body-md hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">monitor_heart</span>
+<span>System Health</span>
+</a>
+</div>
+<div class="px-container-padding mt-auto">
+<button class="w-full bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed-dim font-label-caps text-label-caps py-2 rounded transition-colors">
+                    Deploy Stack
+                </button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto p-gutter md:p-container-padding bg-surface-container-lowest flex flex-col gap-gutter">
+<!-- Page Header & Actions -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">System Insights</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Operational telemetry and trend analysis for Canary environment.</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 border border-outline-variant text-primary font-label-caps text-label-caps rounded hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">filter_list</span>
+                        Filter Insights
+                    </button>
+<button class="px-3 py-1.5 bg-surface-container-highest text-primary font-label-caps text-label-caps rounded hover:bg-outline-variant transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">download</span>
+                        Export Summary
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Metrics Grid (Top Row, spans full or 2/3 depending on layout, let's span full for top row) -->
+<div class="md:col-span-12 grid grid-cols-1 sm:grid-cols-3 gap-gutter">
+<!-- Metric Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-3 flex flex-col justify-between h-24 hover:border-primary transition-colors">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Avg. Recovery Time</span>
+<div class="flex items-baseline gap-2">
+<span class="font-data-mono text-[24px] font-bold text-primary">1m 42s</span>
+<span class="font-body-sm text-body-sm text-secondary-container flex items-center"><span class="material-symbols-outlined text-[12px]">arrow_downward</span> 12%</span>
+</div>
+</div>
+<!-- Metric Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-3 flex flex-col justify-between h-24 hover:border-primary transition-colors">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Stack Stability %</span>
+<div class="flex items-baseline gap-2">
+<span class="font-data-mono text-[24px] font-bold text-primary">99.94%</span>
+<span class="font-body-sm text-body-sm text-outline flex items-center"><span class="material-symbols-outlined text-[12px]">horizontal_rule</span> 0%</span>
+</div>
+</div>
+<!-- Metric Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-3 flex flex-col justify-between h-24 hover:border-error transition-colors">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Active Failures</span>
+<div class="flex items-baseline gap-2">
+<span class="font-data-mono text-[24px] font-bold text-error">3</span>
+<span class="font-body-sm text-body-sm text-error flex items-center"><span class="material-symbols-outlined text-[12px]">arrow_upward</span> 2</span>
+</div>
+</div>
+</div>
+<!-- Middle Row: State Distribution (Left) & Actionable Hints (Right) -->
+<div class="md:col-span-8 bg-surface-container-lowest border border-outline-variant rounded p-4 flex flex-col h-64">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4 border-b border-outline-variant pb-2">State Distribution (Modules)</h3>
+<div class="flex-1 flex items-end gap-2 pb-2">
+<!-- Simple CSS Bar Chart -->
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-primary-fixed-dim h-[80%] rounded-t relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-on-tertiary font-data-mono text-data-mono px-1 rounded text-[10px]">142</div>
+</div>
+<span class="font-label-caps text-label-caps text-[9px] text-on-surface-variant truncate w-full text-center">Stable</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-secondary-container h-[40%] rounded-t relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-on-tertiary font-data-mono text-data-mono px-1 rounded text-[10px]">45</div>
+</div>
+<span class="font-label-caps text-label-caps text-[9px] text-on-surface-variant truncate w-full text-center">Degraded</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-surface-variant h-[20%] rounded-t relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-on-tertiary font-data-mono text-data-mono px-1 rounded text-[10px]">12</div>
+</div>
+<span class="font-label-caps text-label-caps text-[9px] text-on-surface-variant truncate w-full text-center">Deploying</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full bg-error h-[15%] rounded-t relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-on-tertiary font-data-mono text-data-mono px-1 rounded text-[10px]">3</div>
+</div>
+<span class="font-label-caps text-label-caps text-[9px] text-on-surface-variant truncate w-full text-center">Failed</span>
+</div>
+</div>
+</div>
+<div class="md:col-span-4 bg-surface-container-high border border-outline-variant rounded p-4 flex flex-col h-64 border-l-2 border-l-secondary-container">
+<div class="flex items-center gap-2 mb-4 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-[16px] text-secondary-container">lightbulb</span>
+<h3 class="font-label-caps text-label-caps text-primary">Follow-up Hints</h3>
+</div>
+<ul class="flex flex-col gap-3 overflow-y-auto pr-1">
+<li class="bg-surface-container-lowest p-2 rounded border border-outline-variant text-sm flex flex-col gap-1">
+<span class="font-data-mono text-data-mono text-primary">Module Mobile-C</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Has failed 3 times today, consider routing check.</span>
+</li>
+<li class="bg-surface-container-lowest p-2 rounded border border-outline-variant text-sm flex flex-col gap-1">
+<span class="font-data-mono text-data-mono text-primary">DB Cluster-East</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Latency spike detected during backup window.</span>
+</li>
+</ul>
+</div>
+<!-- Bottom Row: Recent Activity -->
+<div class="md:col-span-12 bg-surface-container-lowest border border-outline-variant rounded p-0 flex flex-col max-h-80 overflow-hidden">
+<div class="p-3 border-b border-outline-variant bg-surface-container-low flex justify-between items-center sticky top-0">
+<h3 class="font-label-caps text-label-caps text-primary">Recent Activity Events</h3>
+</div>
+<div class="overflow-y-auto p-3">
+<div class="relative border-l border-outline-variant ml-3 space-y-4">
+<!-- Event 1 -->
+<div class="relative pl-4">
+<div class="absolute w-2 h-2 bg-error rounded-full -left-[4.5px] top-1.5 border border-surface-container-lowest"></div>
+<div class="flex flex-col">
+<span class="font-data-mono text-data-mono text-outline text-[10px]">10:42:01 UTC</span>
+<span class="font-body-md text-body-md text-primary">Module Web-A failed build</span>
+</div>
+</div>
+<!-- Event 2 -->
+<div class="relative pl-4">
+<div class="absolute w-2 h-2 bg-secondary-container rounded-full -left-[4.5px] top-1.5 border border-surface-container-lowest"></div>
+<div class="flex flex-col">
+<span class="font-data-mono text-data-mono text-outline text-[10px]">10:35:12 UTC</span>
+<span class="font-body-md text-body-md text-primary">Manual recovery triggered by Team B</span>
+</div>
+</div>
+<!-- Event 3 -->
+<div class="relative pl-4">
+<div class="absolute w-2 h-2 bg-primary-fixed-dim rounded-full -left-[4.5px] top-1.5 border border-surface-container-lowest"></div>
+<div class="flex flex-col">
+<span class="font-data-mono text-data-mono text-outline text-[10px]">10:15:00 UTC</span>
+<span class="font-body-md text-body-md text-primary">Canary deployment v2.1.4 initiated</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-dim text-on-surface dark:text-on-surface-variant docked full-width bottom-0 h-row-height-compact border-t border-outline-variant flat no shadows flex justify-between items-center px-spacing-container-padding w-full z-40">
+<span class="font-label-caps text-label-caps text-on-surface-variant">© 2024 StackLens Operational Intelligence</span>
+<div class="flex gap-4 font-label-caps text-label-caps">
+<a class="text-on-surface-variant hover:text-primary underline transition-all cursor-pointer" href="#">Connection: Stable</a>
+<a class="text-on-surface-variant hover:text-primary underline transition-all cursor-pointer" href="#">Env: Canary</a>
+<a class="text-on-surface-variant hover:text-primary underline transition-all cursor-pointer" href="#">Support</a>
+</div>
+</footer>
+</body></html>

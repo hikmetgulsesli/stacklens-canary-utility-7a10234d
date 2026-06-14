@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Record Editor - StackLens Canary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#bec6e0",
+                        "surface-bright": "#fcf8fa",
+                        "on-secondary-fixed-variant": "#574500",
+                        "secondary-fixed": "#ffe083",
+                        "primary": "#000000",
+                        "secondary-container": "#fed01b",
+                        "surface-variant": "#e4e2e4",
+                        "on-primary-container": "#7c839b",
+                        "outline-variant": "#c6c6cd",
+                        "tertiary": "#000000",
+                        "primary-fixed": "#dae2fd",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#303032",
+                        "outline": "#76777d",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#45464d",
+                        "secondary-fixed-dim": "#eec200",
+                        "tertiary-fixed-dim": "#dec29a",
+                        "surface-dim": "#dcd9db",
+                        "secondary": "#735c00",
+                        "surface-tint": "#565e74",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#6f5900",
+                        "surface-container-high": "#eae7e9",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#271901",
+                        "on-tertiary-container": "#98805d",
+                        "primary-container": "#131b2e",
+                        "on-primary-fixed": "#131b2e",
+                        "surface-container": "#f0edef",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#f6f3f5",
+                        "on-tertiary-fixed-variant": "#574425",
+                        "tertiary-fixed": "#fcdeb5",
+                        "background": "#fcf8fa",
+                        "surface": "#fcf8fa",
+                        "inverse-on-surface": "#f3f0f2",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "surface-container-highest": "#e4e2e4",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-background": "#1b1b1d",
+                        "on-secondary-fixed": "#231b00",
+                        "tertiary-container": "#271901",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1b1b1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "row-height-standard": "44px",
+                        "unit": "4px",
+                        "row-height-compact": "32px",
+                        "gutter": "12px",
+                        "container-padding": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "data-mono": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "label-caps": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
+<!-- TopAppBar -->
+<header class="bg-primary dark:bg-primary-container text-on-primary dark:text-on-primary-container docked full-width top-0 h-row-height-standard flat no shadows flex justify-between items-center px-gutter w-full z-50">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-black text-on-primary">StackLens Canary</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-secondary-container text-on-secondary-container px-4 py-1 rounded font-body-sm hover:opacity-90 transition-opacity">
+                Create Record
+            </button>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined hover:bg-primary-fixed-variant hover:text-on-primary-fixed cursor-pointer p-1 rounded transition-colors" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined hover:bg-primary-fixed-variant hover:text-on-primary-fixed cursor-pointer p-1 rounded transition-colors" data-icon="settings">settings</span>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 flex flex-col lg:flex-row overflow-hidden pt-[44px]"> <!-- Account for fixed header height if absolute, else adjust -->
+<!-- SideNavBar (Suppressed for transactional/focused view, but instructions say "The Destination Rule... exclude if task-focused with Close/Back". This is Record Editor, a task-focused view. We suppress SideNavBar.) -->
+<!-- Content Area -->
+<div class="flex-1 overflow-y-auto p-container-padding bg-background">
+<div class="max-w-3xl mx-auto space-y-6">
+<!-- Unsaved Changes Banner -->
+<div class="bg-surface-container-high border-l-2 border-secondary-container p-3 flex items-center justify-between rounded shadow-sm">
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-secondary" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="font-body-sm font-semibold">You have unsaved changes</span>
+</div>
+</div>
+<!-- Page Header & Actions -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-outline-variant pb-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-background">Edit Record</h1>
+<p class="font-body-sm text-on-surface-variant mt-1">Configure module identity and routing behavior.</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 border border-outline-variant rounded bg-surface hover:bg-surface-container-low text-on-surface font-body-sm transition-colors">
+                            Cancel Edit
+                        </button>
+<button class="px-4 py-2 rounded bg-primary text-on-primary font-body-sm hover:bg-inverse-surface transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="save">save</span>
+                            Save Record
+                        </button>
+</div>
+</div>
+<!-- Form Canvas -->
+<div class="bg-surface border border-outline-variant rounded p-6 shadow-sm space-y-8">
+<!-- Section: Identity -->
+<div class="space-y-4">
+<h2 class="font-headline-md text-headline-md text-on-surface border-b border-outline-variant pb-2">Identity Details</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Field: Module Name (with Error) -->
+<div class="space-y-1">
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">
+                                    Module Name <span class="text-error">*</span>
+</label>
+<input class="w-full h-row-height-standard px-3 border border-error rounded bg-error-container/20 text-on-background font-data-mono text-data-mono focus:outline-none focus:ring-1 focus:ring-error" placeholder="e.g. payment-gateway" type="text" value="auth-service-v2"/>
+<p class="font-body-sm text-error mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="error">error</span>
+                                    Module Name is already in use.
+                                </p>
+</div>
+<!-- Field: Type -->
+<div class="space-y-1">
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">
+                                    Module Type <span class="text-error">*</span>
+</label>
+<div class="relative">
+<select class="w-full h-row-height-standard pl-3 pr-10 border border-outline-variant rounded bg-surface text-on-background font-body-md appearance-none focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+<option selected="" value="backend">Backend Service</option>
+<option value="web">Web Application</option>
+<option value="mobile">Mobile Client</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Field: Ownership -->
+<div class="space-y-1 mt-4">
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">
+                                Ownership Team
+                            </label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="group">group</span>
+</span>
+<input class="w-full h-row-height-standard pl-10 pr-3 border border-outline-variant rounded bg-surface text-on-background font-body-md focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Enter team or individual owner" type="text" value="Core Platform Engineering"/>
+</div>
+</div>
+</div>
+<!-- Section: Routing -->
+<div class="space-y-4 pt-4 border-t border-outline-variant">
+<h2 class="font-headline-md text-headline-md text-on-surface pb-2">Routing Configuration</h2>
+<!-- Field: Failure Routing Policy -->
+<div class="space-y-1">
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">
+                                Failure Routing Policy
+                            </label>
+<p class="font-body-sm text-on-surface-variant mb-2">Define fallback logic when the primary endpoint is unresponsive.</p>
+<textarea class="w-full p-3 border border-outline-variant rounded bg-surface text-on-background font-data-mono text-data-mono focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary resize-none" placeholder="Enter policy JSON or description..." rows="4">{"fallback": "us-east-1-replica", "timeout_ms": 500, "retry_count": 3}</textarea>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-dim text-on-surface dark:text-on-surface-variant font-label-caps text-label-caps text-on-surface-variant docked full-width bottom-0 h-row-height-compact border-t border-outline-variant flat no shadows flex justify-between items-center px-spacing-container-padding w-full px-4">
+<div>© 2024 StackLens Operational Intelligence</div>
+<div class="flex gap-4">
+<span class="hover:text-primary underline transition-all cursor-pointer">Connection: Stable</span>
+<span class="hover:text-primary underline transition-all cursor-pointer font-bold text-secondary">Env: Canary</span>
+<span class="hover:text-primary underline transition-all cursor-pointer">Support</span>
+</div>
+</footer>
+</body></html>

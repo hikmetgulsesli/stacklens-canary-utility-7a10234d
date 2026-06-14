@@ -1,0 +1,46 @@
+[
+  {
+    "screenId": "674dac3a8dcd4899b4e89fdb9a4a35b6",
+    "title": "Empty and Error Recovery - StackLens Canary Utility",
+    "htmlFile": "674dac3a8dcd4899b4e89fdb9a4a35b6.html",
+    "deviceType": "DESKTOP",
+    "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sX2I2MjkyYWE1YjkxODRlMjBhZGZlNDExNzk2NGVjMzY4EgsSBxCN19Wi9xcYAZIBJAoKcHJvamVjdF9pZBIWQhQxNTY4NTU2MDkxMTU0ODM2MDkzOQ&filename=&opi=96797242",
+    "localHtml": "/Users/setrox/projects/stacklens-canary-utility-7a10234d/stitch/674dac3a8dcd4899b4e89fdb9a4a35b6.html",
+    "surfaceIds": [
+      "SURF_EMPTY_AND_ERROR_RECOVERY"
+    ]
+  },
+  {
+    "screenId": "ec5e6a6d199844438397a63e3b882ab1",
+    "title": "Insights - StackLens Canary Utility",
+    "htmlFile": "ec5e6a6d199844438397a63e3b882ab1.html",
+    "deviceType": "DESKTOP",
+    "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzM3ZjZlNzRlMDZiMDQ2NzBhMzNlZjM4MjFhZGFiOTlmEgsSBxCN19Wi9xcYAZIBJAoKcHJvamVjdF9pZBIWQhQxNTY4NTU2MDkxMTU0ODM2MDkzOQ&filename=&opi=96797242",
+    "localHtml": "/Users/setrox/projects/stacklens-canary-utility-7a10234d/stitch/ec5e6a6d199844438397a63e3b882ab1.html",
+    "surfaceIds": [
+      "SURF_INSIGHTS"
+    ]
+  },
+  {
+    "screenId": "d0d2177349f64962817004efb915246d",
+    "title": "Record Editor - StackLens Canary Utility",
+    "htmlFile": "d0d2177349f64962817004efb915246d.html",
+    "deviceType": "DESKTOP",
+    "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzU1ZGVhYmE3MTQwYzQwNjQ4MDc0MThmOWRlMWZiNDlkEgsSBxCN19Wi9xcYAZIBJAoKcHJvamVjdF9pZBIWQhQxNTY4NTU2MDkxMTU0ODM2MDkzOQ&filename=&opi=96797242",
+    "localHtml": "/Users/setrox/projects/stacklens-canary-utility-7a10234d/stitch/d0d2177349f64962817004efb915246d.html",
+    "surfaceIds": [
+      "SURF_RECORD_EDITOR"
+    ]
+  },
+  {
+    "screenId": "c2b1cad4c6fd4b5f9a8d55d940165171",
+    "title": "Record Operations - StackLens Canary Utility",
+    "htmlFile": "c2b1cad4c6fd4b5f9a8d55d940165171.html",
+    "deviceType": "DESKTOP",
+    "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sX2ZlOTllNjNiNGY3OTQ0Y2ViMDFlNmZlY2E1ODRmZDNhEgsSBxCN19Wi9xcYAZIBJAoKcHJvamVjdF9pZBIWQhQxNTY4NTU2MDkxMTU0ODM2MDkzOQ&filename=&opi=96797242",
+    "localHtml": "/Users/setrox/projects/stacklens-canary-utility-7a10234d/stitch/c2b1cad4c6fd4b5f9a8d55d940165171.html",
+    "surfaceIds": [
+      "SURF_RECORD_OPERATIONS"
+    ]
+  }
+]
